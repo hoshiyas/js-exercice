@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header>
+			<h1>excercises</h1>
+		</header>
+
+		<section id="q1">
+			<h2>saikoro</h2>
+			<button id="btn1">lancer un jeu</button>
+			<p>Resultat : <span id="txt1"></span></p>
+		</section>
+
+		<section id="q2">
+			<h2>omikuji</h2>
+			<button id="btn2">lancer un jeu</button>
+			<table>
+				<thead>
+					<tr>
+						<th>resultat</th>
+						<th>amour</th>
+						<th>voyage</th>
+						<th>travail</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="resultat"></td>
+						<td id="amour"></td>
+						<td id="voyage"></td>
+						<td id="travail"></td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section id="q3">
+			<h2>checkbox</h2>
+			<div class="flex-container">
+				<div>
+					<input type="checkbox" name="dog" id="dog" />
+					<label for="dog">dog</label>
+				</div>
+				<div>
+					<input type="checkbox" name="cat" id="cat" />
+					<label for="cat">cat</label>
+				</div>
+				<div>
+					<input type="checkbox" name="bird" id="bird" />
+					<label for="bird">bird</label>
+				</div>
+				<div>
+					<input type="checkbox" name="fish" id="fish" />
+					<label for="fish">fish</label>
+				</div>
+			</div>
+			<p><span id="txt2"></span> Clicked : <span id="txt3"></span></p>
+		</section>
+
+		<section id="q4">
+			<h2>tasklist</h2>
+			<div class="flex-container">
+				<textarea
+					name=""
+					id="testarea"
+					cols="30"
+					rows="10"
+					placeholder="white your task!"
+				></textarea>
+				<button id="enter">enter</button>
+			</div>
+			<div class="task-list">
+				<h3>Task List</h3>
+				<ul id="task-ul"></ul>
+			</div>
+		</section>
+
+		<section id="q5">
+			<h2>Quiz</h2>
+			<div id="question-container">
+				<p id="question">Question goes here</p>
+			</div>
+			<div id="options-container">
+				<button class="option">Option 1</button>
+				<button class="option">Option 2</button>
+				<button class="option">Option 3</button>
+				<button class="option">Option 4</button>
+			</div>
+			<p id="result"></p>
+			<button id="next-btn">Next</button>
+		</section>
+
+		<script src="script.js"></script>
+	</body>
+</html>
