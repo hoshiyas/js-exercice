@@ -143,6 +143,7 @@ enterTask();
 /*----------------------------------------
         quiz
     ----------------------------------------*/
+
 let q5 = document.getElementById("q5");
 
 const quizData = [
@@ -162,11 +163,20 @@ const quizData = [
 		answer: "William Shakespeare",
 	},
 	{
-		question: "How many person who work at Ant'?",
+		question: "How many people who work at Ant'?",
 		options: ["4", "823", "24", "7"],
 		answer: "7",
 	},
-	// 他の質問を追加する
+	{
+		question: "What is the largest planet in our solar system?",
+		options: ["Earth", "Mars", "Jupiter", "Saturn"],
+		answer: "Jupiter",
+	},
+	{
+		question: "Which element has the chemical symbol 'O'?",
+		options: ["Gold", "Oxygen", "Osmium", "Oganesson"],
+		answer: "Oxygen",
+	},
 ];
 
 let qContainer = q5.querySelector("#question-container");
@@ -174,28 +184,132 @@ let question = q5.querySelector("#question");
 let oContainer = q5.querySelector("#options-container");
 let options = q5.querySelectorAll(".option");
 let result = q5.querySelector("#result");
+let score = 0;
+let askedQuestions = [];
+
+function getRandomQuestion() {
+	if (askedQuestions.length === quizData.length) {
+		return null; // 全ての質問が出題された場合
+	}
+
+	let randomIndex;
+	do {
+		randomIndex = Math.floor(Math.random() * quizData.length);
+	} while (askedQuestions.includes(randomIndex));
+
+	askedQuestions.push(randomIndex);
+	return quizData[randomIndex];
+}
 
 function printQuiz() {
-	randomValue = quizData[Math.floor(quizData.length * Math.random())];
+	const randomValue = getRandomQuestion();
+	if (!randomValue) {
+		result.textContent = "Your score is " + score;
+		return;
+	}
+
 	question.innerHTML = randomValue.question;
 	options[0].innerHTML = randomValue.options[0];
 	options[1].innerHTML = randomValue.options[1];
 	options[2].innerHTML = randomValue.options[2];
 	options[3].innerHTML = randomValue.options[3];
+
+	options.forEach((option) => {
+		option.disabled = false;
+	});
+	result.textContent = "";
+	return randomValue; // 現在の質問を返す
 }
-printQuiz();
+
+let currentQuestion = printQuiz();
 
 function Choise() {
 	options.forEach((option) => {
 		option.addEventListener("click", function () {
-			// console.log("clicked" + randomValue.answer);
-			if (option.textContent == randomValue.answer) {
-				result.textContent = "correct";
-			} else {
-				result.textContent = "tas rate";
+			if (!option.disabled) {
+				// 選択肢が無効でない場合
+				if (option.textContent == currentQuestion.answer) {
+					result.textContent = "correct";
+					score++;
+				} else {
+					result.textContent = "tas rate";
+				}
+				options.forEach((opt) => {
+					opt.disabled = true;
+				});
 			}
 		});
 	});
 }
 
+function nextQuestion() {
+	let nextBtn = q5.querySelector("#next-btn");
+	let count = 0;
+	nextBtn.addEventListener("click", () => {
+		count++;
+		if (count <= quizData.length) {
+			currentQuestion = printQuiz();
+		} else {
+			result.textContent = "Your score is " + score;
+		}
+	});
+}
+
 Choise();
+nextQuestion();
+
+/*----------------------------------------
+        contact form
+    ----------------------------------------*/
+
+let q6 = document.getElementById("q6");
+
+let nameForm = q6.querySelector("name");
+let emailForm = q6.querySelector("email");
+let MessagelForm = q6.querySelector("message");
+
+document.addEventListener("DOMContentLoaded", function () {
+	let contactForm = document.querySelector("#contact-form form");
+
+	contactForm.addEventListener("submit", function (event) {
+		event.preventDefault();
+
+		let nameInput = document.getElementById("name");
+		let emailInput = document.getElementById("email");
+		let messageInput = document.getElementById("message");
+
+		let name = nameInput.value.trim();
+		let email = emailInput.value.trim();
+		let message = messageInput.value.trim();
+
+		// バリデーション
+		if (name === "") {
+			alert("Please enter your name.");
+			nameInput.focus();
+			return;
+		}
+
+		if (!isValidEmail(email)) {
+			alert("Please enter a valid email address.");
+			emailInput.focus();
+			return;
+		}
+
+		// フォームの送信
+		console.log("Name: " + name);
+		console.log("Email: " + email);
+		console.log("Message: " + message);
+
+		// 送信後の処理（例えば、サーバーに送信するなど）
+		// ここではコンソールに表示するだけですが、実際のアプリケーションではサーバーへの送信が行われます
+
+		// フォームのリセット
+		contactForm.reset();
+	});
+
+	function isValidEmail(email) {
+		// 簡易的なメールアドレスのバリデーション
+		// 実際にはより厳密なバリデーションを行う必要がありますが、ここでは単純な形式チェックのみ行います
+		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+	}
+});
